@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name|default:"Muhammad Musa Qureshi | Portfolio" }}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        primaryDark: '#0284c7',
+                        cyanGlow: '#06b6d4',
+                        darker: '#030712',
+                        dark: '#0b1329',
+                        card: '#111e38',
+                        cardHover: '#182b4f'
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
+        }
+        
+        /* Dark Theme Glass Card */
+        .dark .glass-card {
+            background: rgba(17, 30, 56, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .dark .glass-card:hover {
+            border-color: rgba(14, 165, 233, 0.5);
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+
+        /* Light Theme Glass Card - High Contrast & Translucent */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(203, 213, 225, 0.8);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+        }
+        .glass-card:hover {
+            border-color: rgba(2, 132, 199, 0.6);
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 30px -4px rgba(2, 132, 199, 0.18);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-darker text-slate-900 dark:text-slate-200 font-sans antialiased selection:bg-primary selection:text-white relative min-h-screen overflow-x-hidden transition-colors duration-300">
+
+    <!-- Particle Mesh Canvas Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-40 bg-white/90 dark:bg-darker/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 transition-colors duration-300 shadow-sm dark:shadow-none">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Brand Name -->
+            <a href="#" class="text-base sm:text-lg font-bold tracking-tight text-primary font-mono flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-90 transition">
+                <span class="text-cyanGlow font-black text-lg">&lt;</span>
+                <span class="text-slate-950 dark:text-white">{{ profile.name|default:"Muhammad Musa Qureshi" }}</span>
+                <span class="text-cyanGlow font-black text-lg">/&gt;</span>
+            </a>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold shrink-0">
+                <a href="#about" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">About</a>
+                <a href="#skills" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Skills</a>
+                <a href="#projects" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Projects</a>
+                <a href="#experience" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Experience</a>
+                <a href="#achievements" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Achievements</a>
+                <a href="#contact" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Contact</a>
+            </div>
+
+            <!-- Right Controls -->
+            <div class="flex items-center space-x-3 sm:space-x-4 shrink-0">
+                <div class="flex items-center space-x-3 text-base">
+                    <a href="https://github.com/MusaQureshi90" target="_blank" title="GitHub" class="text-slate-700 hover:text-black dark:text-slate-400 dark:hover:text-white transition">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/musaqureshi90/" target="_blank" title="LinkedIn" class="text-slate-700 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.instagram.com/musaqureshi90/" target="_blank" title="Instagram" class="text-slate-700 hover:text-pink-600 dark:text-slate-400 dark:hover:text-pink-500 transition">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="mailto:mformusa11@gmail.com" title="Email" class="text-slate-700 hover:text-cyanGlow dark:text-slate-400 dark:hover:text-cyanGlow transition">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+
+                <div class="h-4 w-px bg-slate-300 dark:bg-slate-700"></div>
+
+                <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-1.5 sm:p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-amber-300 border border-slate-300 dark:border-slate-700 transition">
+                    <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-xs sm:text-sm hidden"></i>
+                    <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-xs sm:text-sm hidden"></i>
+                </button>
+
+                {% if profile.resume %}
+                <a href="{{ profile.resume.url }}" target="_blank" class="hidden sm:inline-block bg-primary/10 text-primary border border-primary/40 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold hover:bg-primary hover:text-white transition">
+                    Resume.pdf
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <main class="relative z-10">
+
+        <!-- Hero Section with Profile Picture -->
+        <section class="min-h-screen flex items-center justify-center pt-28 pb-16 px-6">
+            <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+                
+                <!-- Profile Picture with In-Page Modal Popup -->
+                {% if profile.profile_image %}
+                <div class="relative mb-8 group">
+                    <button type="button" onclick="openModal('profile-pic-modal')" title="Click to preview photo" class="block cursor-pointer focus:outline-none">
+                        <div class="w-36 h-36 md:w-44 md:h-44 rounded-full p-1 bg-gradient-to-tr from-primary via-cyanGlow to-sky-400 shadow-xl shadow-primary/30 transition-transform duration-500 group-hover:scale-105">
+                            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-full h-full object-cover rounded-full border-4 border-white dark:border-darker">
+                        </div>
+                    </button>
+                    <span class="absolute bottom-2 right-3 w-5 h-5 bg-emerald-500 border-4 border-white dark:border-darker rounded-full shadow pointer-events-none"></span>
+                </div>
+
+                <!-- Profile Photo Popup Modal -->
+                <div id="profile-pic-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 dark:bg-darker/90 backdrop-blur-md flex items-center justify-center p-4">
+                    <div class="glass-card bg-white dark:bg-card max-w-md w-full p-6 rounded-3xl border border-slate-300 dark:border-slate-700 shadow-2xl relative text-center">
+                        <button onclick="closeModal('profile-pic-modal')" class="absolute top-4 right-4 text-slate-500 hover:text-slate-950 dark:hover:text-white text-xl">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        
+                        <div class="w-64 h-64 mx-auto rounded-2xl overflow-hidden border-2 border-primary/40 shadow-lg bg-slate-100 dark:bg-darker mb-4">
+                            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-full h-full object-cover">
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">{{ profile.name }}</h3>
+                        <p class="text-xs font-mono text-primaryDark dark:text-primary mt-1">{{ profile.tagline }}</p>
+
+                        <div class="mt-5">
+                            <button onclick="closeModal('profile-pic-modal')" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white px-6 py-2 rounded-xl text-sm font-medium transition">Close Window</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="inline-flex items-center gap-2 bg-primary/15 text-primaryDark dark:text-primary font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-full border border-primary/40 mb-6 glow-effect font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    Available for Engineering & Academic Roles
+                </div>
+                <h1 class="text-4xl md:text-7xl font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight">
+                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-600 to-sky-600 dark:from-primary dark:via-cyan-400 dark:to-sky-200">{{ profile.name }}</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-slate-800 dark:text-slate-300 mt-5 font-mono font-medium tracking-tight">{{ profile.tagline }}</p>
+                <p class="text-slate-700 dark:text-slate-400 mt-6 max-w-2xl mx-auto leading-relaxed text-base font-normal">{{ profile.bio }}</p>
+                
+                <div class="mt-10 flex flex-wrap justify-center gap-4 font-mono text-sm">
+                    <a href="#projects" class="bg-primary hover:bg-sky-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-primary/30 transition transform hover:-translate-y-0.5">Explore Portfolio</a>
+                    <a href="#contact" class="glass-card hover:bg-white dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200 font-semibold px-8 py-3.5 rounded-xl transition">Initiate Contact</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-terminal text-primary text-2xl"></i> About Engineering Persona
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-10"></div>
+                
+                <div class="glass-card p-8 md:p-10 rounded-2xl">
+                    <p class="text-slate-800 dark:text-slate-300 leading-relaxed text-lg whitespace-pre-line">{{ profile.about_text }}</p>
+                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-sm">
+                        <div class="flex items-center gap-3 text-slate-800 dark:text-slate-300 font-medium">
+                            <i class="fa-solid fa-location-dot text-primary text-lg"></i>
+                            <span>{{ profile.location }}</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-800 dark:text-slate-300 font-medium">
+                            <i class="fa-solid fa-envelope text-primary text-lg"></i>
+                            <a href="mailto:{{ profile.email }}" class="hover:text-primary transition">{{ profile.email }}</a>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-800 dark:text-slate-300 font-medium">
+                            <i class="fa-solid fa-graduation-cap text-primary text-lg"></i>
+                            <span>BS Computer Science (UMT)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 px-6 bg-slate-200/40 dark:bg-dark/40 transition-colors duration-300">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-microchip text-primary text-2xl"></i> Technical Arsenal
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12"></div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Languages -->
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-base font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2 font-mono"><i class="fa-solid fa-code text-primary"></i> Programming Languages</h3>
+                        <div class="flex flex-wrap gap-2.5">
+                            {% for skill in languages %}
+                            <span class="bg-white/90 dark:bg-darker/90 text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700/80 px-3.5 py-1.5 rounded-lg text-sm font-mono font-medium hover:border-primary transition shadow-sm">{{ skill.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Frameworks -->
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-base font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2 font-mono"><i class="fa-solid fa-layer-group text-primary"></i> Frameworks & Deep Learning</h3>
+                        <div class="flex flex-wrap gap-2.5">
+                            {% for skill in frameworks %}
+                            <span class="bg-white/90 dark:bg-darker/90 text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700/80 px-3.5 py-1.5 rounded-lg text-sm font-mono font-medium hover:border-primary transition shadow-sm">{{ skill.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-base font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2 font-mono"><i class="fa-solid fa-database text-primary"></i> Tools & Databases</h3>
+                        <div class="flex flex-wrap gap-2.5">
+                            {% for skill in tools %}
+                            <span class="bg-white/90 dark:bg-darker/90 text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700/80 px-3.5 py-1.5 rounded-lg text-sm font-mono font-medium hover:border-primary transition shadow-sm">{{ skill.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Core -->
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-base font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2 font-mono"><i class="fa-solid fa-brain text-primary"></i> Core Competencies</h3>
+                        <div class="flex flex-wrap gap-2.5">
+                            {% for skill in core_skills %}
+                            <span class="bg-white/90 dark:bg-darker/90 text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700/80 px-3.5 py-1.5 rounded-lg text-sm font-mono font-medium hover:border-primary transition shadow-sm">{{ skill.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
+                            <i class="fa-solid fa-laptop-code text-primary text-2xl"></i> Engineering Works
+                        </h2>
+                        <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full"></div>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-3 md:mt-0 font-mono font-medium">Click any project card to inspect deep technical specs</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for project in projects %}
+                    <div onclick="openModal('project-modal-{{ project.id }}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between group">
+                        {% if project.image %}
+                        <div class="w-full h-44 overflow-hidden border-b border-slate-200 dark:border-slate-800/80 bg-slate-100 dark:bg-darker">
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        {% endif %}
+                        <div class="p-6 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="text-xs font-mono text-cyanGlow font-bold">PROJ_0{{ forloop.counter }}</span>
+                                    {% if project.featured %}
+                                    <span class="text-xs font-mono bg-primary/20 text-primaryDark dark:text-primary border border-primary/40 px-2.5 py-0.5 rounded-full font-bold">Flagship</span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-lg font-bold text-slate-950 dark:text-white group-hover:text-primary transition leading-snug">{{ project.title }}</h3>
+                                <p class="text-slate-700 dark:text-slate-400 mt-3 text-sm leading-relaxed line-clamp-3">{{ project.description }}</p>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80">
+                                <p class="text-xs font-mono text-primaryDark dark:text-primary font-semibold mb-3">{{ project.tech_stack }}</p>
+                                <span class="text-xs font-mono text-slate-800 dark:text-slate-300 group-hover:text-primary font-bold flex items-center gap-1.5 transition">
+                                    Inspect Architecture <i class="fa-solid fa-arrow-right text-primary group-hover:translate-x-1 transition"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Deep Modal -->
+                    <div id="project-modal-{{ project.id }}" class="fixed inset-0 z-50 hidden bg-slate-950/70 dark:bg-darker/90 backdrop-blur-md flex items-center justify-center p-4">
+                        <div class="glass-card bg-white dark:bg-card max-w-2xl w-full p-8 rounded-2xl border border-slate-300 dark:border-slate-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                            <button onclick="closeModal('project-modal-{{ project.id }}')" class="absolute top-6 right-6 text-slate-500 hover:text-slate-950 dark:hover:text-white text-xl">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            
+                            {% if project.image %}
+                            <div class="mb-5 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+                                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full max-h-64 object-cover">
+                            </div>
+                            {% endif %}
+
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-mono text-cyanGlow font-bold">DETAILED SYSTEM SPECIFICATION</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-950 dark:text-white">{{ project.title }}</h3>
+                            <p class="text-xs font-mono text-primaryDark dark:text-primary font-bold mt-1">{{ project.tech_stack }}</p>
+
+                            <div class="mt-6 space-y-4 text-slate-800 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-line border-t border-slate-200 dark:border-slate-800 pt-4">
+                                {{ project.description }}
+                            </div>
+
+                            {% if project.title|slice:":8" == "XO ARENA" %}
+                            <div class="mt-6 bg-primary/10 p-4 rounded-xl border border-primary/30 flex items-center justify-between">
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-950 dark:text-white font-mono flex items-center gap-2"><i class="fa-brands fa-google-play text-cyanGlow"></i> Google Play Store Release</h4>
+                                    <p class="text-xs text-slate-700 dark:text-slate-300 mt-0.5">Deployment pipeline active. Link is on its way!</p>
+                                </div>
+                                <a href="#contact" onclick="closeModal('project-modal-{{ project.id }}')" class="text-xs font-mono bg-primary px-3 py-1.5 rounded-lg text-white font-semibold hover:bg-sky-500 transition">Get in Touch</a>
+                            </div>
+                            {% endif %}
+
+                            <div class="mt-8 flex gap-4 font-mono text-sm">
+                                {% if project.github_link %}
+                                <a href="{{ project.github_link }}" target="_blank" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white px-5 py-2.5 rounded-lg border border-slate-700 flex items-center gap-2 font-medium transition"><i class="fa-brands fa-github"></i> Repository</a>
+                                {% endif %}
+                                <button onclick="closeModal('project-modal-{{ project.id }}')" class="text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white px-4 py-2.5 font-medium transition">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-24 px-6 bg-slate-200/40 dark:bg-dark/40 transition-colors duration-300">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-briefcase text-primary text-2xl"></i> Experience & Leadership
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12"></div>
+
+                <div class="space-y-6">
+                    {% for exp in experiences %}
+                    <div onclick="openModal('exp-modal-{{ exp.id }}')" class="glass-card p-6 md:p-8 rounded-2xl relative border-l-4 border-l-primary cursor-pointer hover:border-l-cyanGlow transition">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between">
+                            <h3 class="text-xl font-bold text-slate-950 dark:text-white">{{ exp.role }}</h3>
+                            <span class="text-xs font-mono text-cyanGlow bg-cyanGlow/10 px-3 py-1 rounded-full border border-cyanGlow/30 font-bold mt-2 md:mt-0 w-max">{{ exp.start_date }} – {{ exp.end_date }}</span>
+                        </div>
+                        <p class="text-slate-800 dark:text-slate-300 font-semibold text-sm mt-1">{{ exp.organization }}</p>
+                        <p class="text-slate-700 dark:text-slate-400 mt-4 text-sm leading-relaxed whitespace-pre-line line-clamp-2">{{ exp.description }}</p>
+                        <span class="text-xs font-mono text-primaryDark dark:text-primary font-bold mt-3 inline-block">Click for comprehensive duties & scope &rarr;</span>
+                    </div>
+
+                    <!-- Experience Deep Modal -->
+                    <div id="exp-modal-{{ exp.id }}" class="fixed inset-0 z-50 hidden bg-slate-950/70 dark:bg-darker/90 backdrop-blur-md flex items-center justify-center p-4">
+                        <div class="glass-card bg-white dark:bg-card max-w-2xl w-full p-8 rounded-2xl border border-slate-300 dark:border-slate-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                            <button onclick="closeModal('exp-modal-{{ exp.id }}')" class="absolute top-6 right-6 text-slate-500 hover:text-slate-950 dark:hover:text-white text-xl">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <span class="text-xs font-mono text-cyanGlow font-bold">PROFESSIONAL ENGAGEMENT</span>
+                            <h3 class="text-2xl font-bold text-slate-950 dark:text-white mt-1">{{ exp.role }}</h3>
+                            <p class="text-sm font-mono text-primaryDark dark:text-primary font-bold">{{ exp.organization }} • {{ exp.start_date }} – {{ exp.end_date }}</p>
+
+                            <div class="mt-6 border-t border-slate-200 dark:border-slate-800 pt-4 text-slate-800 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                                {{ exp.description }}
+                            </div>
+
+                            <div class="mt-8 text-right font-mono">
+                                <button onclick="closeModal('exp-modal-{{ exp.id }}')" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition">Close Window</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-trophy text-primary text-2xl"></i> Honors & Credentials
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12"></div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    {% for ach in achievements %}
+                    <div onclick="openModal('ach-modal-{{ ach.id }}')" class="glass-card p-6 rounded-2xl flex items-start space-x-4 cursor-pointer overflow-hidden">
+                        {% if ach.image %}
+                        <div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-darker">
+                            <img src="{{ ach.image.url }}" alt="{{ ach.title }}" class="w-full h-full object-cover">
+                        </div>
+                        {% else %}
+                        <div class="text-cyanGlow text-2xl flex-shrink-0 bg-primary/10 p-3 rounded-xl border border-primary/20">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        {% endif %}
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-bold text-slate-950 dark:text-white truncate">{{ ach.title }}</h3>
+                            <p class="text-xs font-mono text-slate-600 dark:text-slate-400 font-semibold mt-1">{{ ach.issuer }} • {{ ach.date }}</p>
+                            {% if ach.description %}
+                            <p class="text-slate-700 dark:text-slate-400 mt-2 text-sm leading-relaxed line-clamp-2">{{ ach.description }}</p>
+                            {% endif %}
+                            <span class="text-xs font-mono text-primaryDark dark:text-primary font-bold mt-2 inline-block">View credential record &rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Deep Modal -->
+                    <div id="ach-modal-{{ ach.id }}" class="fixed inset-0 z-50 hidden bg-slate-950/70 dark:bg-darker/90 backdrop-blur-md flex items-center justify-center p-4">
+                        <div class="glass-card bg-white dark:bg-card max-w-xl w-full p-8 rounded-2xl border border-slate-300 dark:border-slate-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                            <button onclick="closeModal('ach-modal-{{ ach.id }}')" class="absolute top-6 right-6 text-slate-500 hover:text-slate-950 dark:hover:text-white text-xl">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            
+                            {% if ach.image %}
+                            <div class="mb-5 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-darker">
+                                <img src="{{ ach.image.url }}" alt="{{ ach.title }}" class="w-full max-h-72 object-contain mx-auto">
+                            </div>
+                            {% endif %}
+
+                            <span class="text-xs font-mono text-cyanGlow font-bold">OFFICIAL DISTINCTION</span>
+                            <h3 class="text-2xl font-bold text-slate-950 dark:text-white mt-1">{{ ach.title }}</h3>
+                            <p class="text-sm font-mono text-primaryDark dark:text-primary font-bold">{{ ach.issuer }} • {{ ach.date }}</p>
+
+                            <div class="mt-6 border-t border-slate-200 dark:border-slate-800 pt-4 text-slate-800 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                                {{ ach.description }}
+                            </div>
+
+                            <div class="mt-8 flex justify-between items-center font-mono">
+                                {% if ach.image %}
+                                <a href="{{ ach.image.url }}" target="_blank" class="text-xs text-primary font-bold hover:underline flex items-center gap-1.5">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full Certificate
+                                </a>
+                                {% else %}
+                                <span></span>
+                                {% endif %}
+                                <button onclick="closeModal('ach-modal-{{ ach.id }}')" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition">Close Window</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6 bg-slate-200/40 dark:bg-dark/40 transition-colors duration-300">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight text-center flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-paper-plane text-primary text-2xl"></i> Establish Connection
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12 mx-auto"></div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="bg-emerald-500/15 border border-emerald-500/40 text-emerald-700 dark:text-emerald-400 px-5 py-4 rounded-xl mb-6 text-center text-sm font-mono font-bold">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" class="glass-card p-8 md:p-10 rounded-2xl space-y-5">
+                    {% csrf_token %}
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Sender Name</label>
+                            <input type="text" name="name" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Email Coordinate</label>
+                            <input type="email" name="email" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Subject / Inquiry Scope</label>
+                        <input type="text" name="subject" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Message Payload</label>
+                        <textarea name="message" rows="4" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-sky-500 text-white font-mono font-bold py-3.5 rounded-xl shadow-lg shadow-primary/30 transition transform hover:-translate-y-0.5">Transmit Message</button>
+                </form>
+
+                <!-- Social Grid -->
+                <div class="mt-12 flex justify-center gap-6 text-slate-700 dark:text-slate-400 text-2xl font-mono">
+                    <a href="https://github.com/MusaQureshi90" target="_blank" title="GitHub" class="hover:text-black dark:hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/musaqureshi90/" target="_blank" title="LinkedIn" class="hover:text-primary dark:hover:text-primary transition"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/musaqureshi90/" target="_blank" title="Instagram" class="hover:text-pink-600 dark:hover:text-pink-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="mailto:mformusa11@gmail.com" title="Direct Email" class="hover:text-cyanGlow transition"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-8 border-t border-slate-200 dark:border-slate-800/80 text-center text-slate-600 dark:text-slate-500 text-xs font-mono transition-colors duration-300">
+            <p>&copy; 2026 {{ profile.name }}. Designed with precision using Django & Tailwind CSS.</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('hidden');
+        }
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.add('hidden');
+        }
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'light' || (!('color-theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.remove('dark');
+            themeToggleDarkIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // Interactive Particle Mesh Canvas - Dynamic Light / Dark Mode Color Adaptation
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const numParticles = Math.min(Math.floor(window.innerWidth / 15), 75);
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.65,
+                vy: (Math.random() - 0.5) * 0.65,
+                radius: Math.random() * 1.5 + 1.2
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            const isDark = document.documentElement.classList.contains('dark');
+            // Sharp Navy/Electric contrast in Light Mode, Vibrant Cyan in Dark Mode
+            ctx.fillStyle = isDark ? 'rgba(14, 165, 233, 0.5)' : 'rgba(2, 132, 199, 0.75)';
+            ctx.strokeStyle = isDark ? 'rgba(14, 165, 233, 0.12)' : 'rgba(15, 23, 42, 0.16)';
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 125) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
