@@ -207,10 +207,11 @@ def run_population():
             "Django Full-Stack Personal Portfolio Website",
             "A modern, highly-responsive personal portfolio platform built with Django and Tailwind CSS featuring dynamic SQLite architecture, real-time message handling, and interactive Canvas rendering.",
             "Python, Django, Tailwind CSS, SQLite, HTML5 / CSS3",
-            "https://github.com/MusaQureshi90/portfolio_project",
+            "https://github.com/MusaQureshi90/personal-portfolio",
             False,
             17
         ),
+       
     ]
 
     for title, desc, stack, link, feat, ord_num in projects_data:
