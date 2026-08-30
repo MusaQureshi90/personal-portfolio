@@ -78,18 +78,19 @@
 
     <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-darker/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 transition-colors duration-300 shadow-sm dark:shadow-none">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
                 
-                <!-- Brand Name -->
-                <a href="#" class="text-sm sm:text-lg font-bold tracking-tight text-primary font-mono flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-90 transition">
+                <!-- Brand Name (Responsive: Short on mobile, full on desktop) -->
+                <a href="#" class="text-sm sm:text-lg font-bold tracking-tight text-primary font-mono flex items-center gap-1 shrink hover:opacity-90 transition">
                     <span class="text-cyanGlow font-black text-base sm:text-lg">&lt;</span>
-                    <span class="text-slate-950 dark:text-white">{{ profile.name|default:"Muhammad Musa Qureshi" }}</span>
+                    <span class="hidden sm:inline text-slate-950 dark:text-white">{{ profile.name|default:"Muhammad Musa Qureshi" }}</span>
+                    <span class="inline sm:hidden text-slate-950 dark:text-white">Musa Qureshi</span>
                     <span class="text-cyanGlow font-black text-base sm:text-lg">/&gt;</span>
                 </a>
                 
                 <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center space-x-5 lg:space-x-8 text-sm font-semibold shrink-0">
+                <nav class="hidden lg:flex items-center space-x-6 text-sm font-semibold shrink-0">
                     <a href="#about" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">About</a>
                     <a href="#skills" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Skills</a>
                     <a href="#projects" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Projects</a>
@@ -98,40 +99,35 @@
                     <a href="#contact" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition">Contact</a>
                 </nav>
 
-                <!-- Right Controls -->
-                <div class="flex items-center space-x-2 sm:space-x-4 shrink-0">
+                <!-- Right Controls (Always visible & fits on all mobile screens) -->
+                <div class="flex items-center space-x-2 shrink-0">
                     <!-- Desktop Social Links -->
-                    <div class="hidden sm:flex items-center space-x-3 text-base">
+                    <div class="hidden md:flex items-center space-x-3 text-base pr-2 border-r border-slate-300 dark:border-slate-700">
                         <a href="https://github.com/MusaQureshi90" target="_blank" title="GitHub" class="text-slate-700 hover:text-black dark:text-slate-400 dark:hover:text-white transition">
                             <i class="fa-brands fa-github"></i>
                         </a>
                         <a href="https://www.linkedin.com/in/musaqureshi90/" target="_blank" title="LinkedIn" class="text-slate-700 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition">
                             <i class="fa-brands fa-linkedin"></i>
                         </a>
-                        <a href="https://www.instagram.com/musaqureshi90/" target="_blank" title="Instagram" class="text-slate-700 hover:text-pink-600 dark:text-slate-400 dark:hover:text-pink-500 transition">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
                         <a href="mailto:mformusa11@gmail.com" title="Email" class="text-slate-700 hover:text-cyanGlow dark:text-slate-400 dark:hover:text-cyanGlow transition">
                             <i class="fa-solid fa-envelope"></i>
                         </a>
                     </div>
 
-                    <div class="hidden sm:block h-4 w-px bg-slate-300 dark:bg-slate-700"></div>
-
-                    <!-- Theme Toggle Button (Always Visible) -->
-                    <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-1.5 sm:p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-amber-300 border border-slate-300 dark:border-slate-700 transition shrink-0">
-                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-xs sm:text-sm hidden"></i>
-                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-xs sm:text-sm hidden"></i>
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-amber-300 border border-slate-300 dark:border-slate-700 transition">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm hidden"></i>
                     </button>
 
                     {% if profile.resume %}
                     <a href="{{ profile.resume.url }}" target="_blank" class="hidden sm:inline-block bg-primary/10 text-primary border border-primary/40 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold hover:bg-primary hover:text-white transition">
-                        Resume.pdf
+                        Resume
                     </a>
                     {% endif %}
 
-                    <!-- Mobile Menu Hamburger Button -->
-                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" aria-label="Open Navigation Menu" class="md:hidden p-1.5 sm:p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 transition shrink-0">
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" aria-label="Open Menu" class="lg:hidden p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 transition">
                         <i id="menu-icon" class="fa-solid fa-bars text-sm"></i>
                     </button>
                 </div>
@@ -139,7 +135,7 @@
         </div>
 
         <!-- Mobile Dropdown Navigation Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-darker/95 border-b border-slate-200 dark:border-slate-800 px-4 pt-3 pb-5 space-y-2 backdrop-blur-xl shadow-lg">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 dark:bg-darker/95 border-b border-slate-200 dark:border-slate-800 px-4 pt-3 pb-5 space-y-2 backdrop-blur-xl shadow-lg">
             <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition">About</a>
             <a href="#skills" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition">Skills</a>
             <a href="#projects" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition">Projects</a>
@@ -549,7 +545,7 @@
 
         <!-- Footer -->
         <footer class="py-8 border-t border-slate-200 dark:border-slate-800/80 text-center text-slate-600 dark:text-slate-500 text-xs font-mono transition-colors duration-300">
-            <p>&copy; 2026 {{ profile.name }} Portfolio.</p>
+            <p>&copy; 2026 {{ profile.name }}. Designed with precision using Django & Tailwind CSS.</p>
         </footer>
 
     </main>
@@ -614,7 +610,7 @@
             }
         });
 
-        // Interactive Particle Mesh Canvas - Dynamic Light / Dark Mode Color Adaptation
+        // Interactive Particle Mesh Canvas
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
