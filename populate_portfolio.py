@@ -13,7 +13,7 @@ def run_population():
     Profile.objects.all().delete()
     Profile.objects.create(
         name="Muhammad Musa Qureshi",
-        tagline="Computer Scientist | AI/ML & Computer Vision Engineer | Full-Stack & Flutter Developer",
+        tagline="BS Computer Science | AI/ML & Computer Vision Engineer | UMT",
         bio="BS Computer Science graduate from UMT with strong expertise in AI-driven traffic enforcement systems, computer vision algorithms, real-time object detection (YOLOv11), full-stack Django architecture, mobile engineering with Flutter, WordPress development, Prompt Engineering, and Vibe Coding.",
         about_text="I am a passionate Computer Scientist with a comprehensive background in Software Engineering, Deep Learning, Computer Vision, and Rapid Application Prototyping. My flagship engineering work includes 'Smart Eye', an AI-driven traffic enforcement system awarded Top 10 at UMT SST Open House.\n\nI combine classical algorithms with modern AI workflows, leveraging Claude AI, Prompt Engineering, Vibe Coding pipelines, and cross-platform mobile & web development to deliver impactful real-world software solutions.",
         email="mformusa11@gmail.com",
