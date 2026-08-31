@@ -1,0 +1,18 @@
+# Environment variables (secrets)
+.env
+
+# Virtual environment
+env/
+
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Media uploads (agar aap nahi chahte user uploads GitHub par jayein)
+media/
+
+# VS Code settings (optional)
+.vscode/
