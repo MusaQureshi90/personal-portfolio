@@ -222,7 +222,7 @@
         <section id="about" class="py-24 px-6">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
-                    <i class="fa-solid fa-terminal text-primary text-2xl"></i> About Engineering Persona
+                    <i class="fa-solid fa-terminal text-primary text-2xl"></i> Who I Am
                 </h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-10"></div>
                 
@@ -250,7 +250,7 @@
         <section id="skills" class="py-24 px-6 bg-slate-200/40 dark:bg-dark/40 transition-colors duration-300">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
-                    <i class="fa-solid fa-microchip text-primary text-2xl"></i> Technical Arsenal
+                    <i class="fa-solid fa-microchip text-primary text-2xl"></i> What I Do
                 </h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12"></div>
                 
@@ -304,7 +304,8 @@
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
                     <div>
                         <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight flex items-center gap-3">
-                            <i class="fa-solid fa-laptop-code text-primary text-2xl"></i> Engineering Works
+                            <i class="fa-solid fa-laptop-code text-primary text-2xl"></i> My Experience
+
                         </h2>
                         <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full"></div>
                     </div>
@@ -502,7 +503,7 @@
         <section id="contact" class="py-24 px-6 bg-slate-200/40 dark:bg-dark/40 transition-colors duration-300">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-3xl font-bold text-slate-950 dark:text-white mb-2 tracking-tight text-center flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-paper-plane text-primary text-2xl"></i> Establish Connection
+                    <i class="fa-solid fa-paper-plane text-primary text-2xl"></i> Let's Talk
                 </h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-primary to-cyanGlow rounded-full mb-12 mx-auto"></div>
 
@@ -518,11 +519,11 @@
                     {% csrf_token %}
                     <div class="grid md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Sender Name</label>
+                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Your Name</label>
                             <input type="text" name="name" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
                         </div>
                         <div>
-                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Email Coordinate</label>
+                            <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Your Email</label>
                             <input type="email" name="email" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
                         </div>
                     </div>
@@ -531,10 +532,10 @@
                         <input type="text" name="subject" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Message Payload</label>
+                        <label class="block text-xs font-mono font-bold text-slate-700 dark:text-slate-400 mb-2">Message</label>
                         <textarea name="message" rows="4" required class="w-full bg-white dark:bg-darker/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-950 dark:text-white focus:outline-none focus:border-primary font-mono text-sm transition shadow-sm"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-sky-500 text-white font-mono font-bold py-3.5 rounded-xl shadow-lg shadow-primary/30 transition transform hover:-translate-y-0.5">Transmit Message</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-sky-500 text-white font-mono font-bold py-3.5 rounded-xl shadow-lg shadow-primary/30 transition transform hover:-translate-y-0.5">Send Message</button>
                 </form>
 
                 <!-- Social Grid -->
