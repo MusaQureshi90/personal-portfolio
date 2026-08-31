@@ -246,10 +246,10 @@ def run_population():
         ),
         (
             "WordPress Developer",
-            "Freelance / Client Engagements",
+            "Professional Training",
             "April 2024",
             "May 2024",
-            "• Architected custom, responsive WordPress websites with SEO optimization, custom plugins, and fast page loads.\n• Managed database integrations, e-commerce payment setups, and responsive UI customization.",
+            "• Completed practical training in WordPress website development and customization.\n• Gained hands on experience with themes, plugins, responsive design, SEO, and website management.",
             3
         ),
         (
@@ -338,8 +338,8 @@ def run_population():
         (
             "Civic Service Commendation",
             "City Traffic Police Lahore",
-            "2026",
-            "Commended for volunteer public safety contributions and participation in civic traffic regulation drives.",
+            "2021",
+            "Recognized for voluntary public service and active participation in traffic management and road safety initiatives. Contributed to civic awareness, traffic regulation, and public safety efforts as a Traffic Police Volunteer.",
             6
         ),
     ]
